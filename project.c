@@ -347,7 +347,6 @@ void Find()
 		printf("\tNo match found");
 	}
 	fclose(fp1);
-	printf("Hello!");
 }
 
 
