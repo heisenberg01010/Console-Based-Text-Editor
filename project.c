@@ -5,6 +5,7 @@
 
 int ch;
 char fn[20],e,c,name[20];
+
 fpos_t position;
 
 FILE *fp1,*fp2,*fp;
