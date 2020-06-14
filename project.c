@@ -109,10 +109,11 @@ void NewFile()
 	char temp;
 	scanf("%c", &temp);
 
+
 	while(1)
 	{
 		c=getchar();
-		fputc(c,fp1);
+
 
 		if(c == esc )
 		{
@@ -124,7 +125,9 @@ void NewFile()
 		{
 			remove(name);
 			break;
-		}	
+		}
+
+		fputc(c,fp1);
 
 	}
 }
