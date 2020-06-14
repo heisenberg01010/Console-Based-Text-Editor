@@ -4,8 +4,8 @@
 
 
 int ch;
-
 char fn[20],e,c,name[20];
+fpos_t position;
 
 FILE *fp1,*fp2,*fp;
 
@@ -327,26 +327,31 @@ void Find()
 	char temp[100000];
 	int line = 1;
 	int match_no = 0;
-	char str[100];
+	char str[100], *ptr[100], string[100];
+	long int pos;
 
 	printf("\tEnter the phrase to search: ");
 	scanf("%s", str);
 
 	while(fgets(temp, 100000, fp1) != NULL) 
 	{
+		*ptr = strstr(temp, str);
 		if((strstr(temp, str)) != NULL) 
 		{
-			printf("\tA match found on line: %d\n", line);
-			printf("\n\t%s\n", temp);
+			pos = *ptr - temp;
+			fseek(fp1, pos, SEEK_CUR);
+			*string = printf("\033[1;31m"); printf("\t%s", str); printf("\033[0m");
+			
+			printf("%s found on line %d at position %ld in line : %s\n", string, line, pos, temp);
 			match_no++;
 		}
-		line++;
+		line++;	
 	}
 	if(match_no == 0)
 	{
 		printf("\tNo match found");
 	}
-	fclose(fp1);
+
 }
 
 
