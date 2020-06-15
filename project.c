@@ -35,7 +35,8 @@ int main()
 			
 			scanf(" %d",&ch);
 			getchar();
-			
+			fflush(stdin);
+
 		}
 		while (ch < 1 || ch > 9);
 
@@ -114,7 +115,6 @@ void NewFile()
 	{
 		c=getchar();
 
-
 		if(c == esc )
 		{
 			fclose(fp1);
@@ -185,28 +185,34 @@ void View()
 	scanf("%s",fn);
 	fp1=fopen(fn,"r");
 
-	if(fp1==NULL)
+	if(fp1==NULL)                                 
 	{
 		printf("\n\tFile not found!");
 		return;
 	}
+
 	printf("\t");
-	while( c != EOF )
+
+	c=fgetc(fp1);
+	while( c != EOF )                           
 	{
-		c=getc(fp1);
+
 		printf("%c",c);
+		c=getc(fp1);
 	}
 
+	fclose(fp1);
+	return;
 }
 
 void Copy()
 {
-	printf("\n\tEnter the new filename to copy:  ");
-	scanf("%s",fn);
 	printf("\n\tEnter the filename from which to copy: ");
 	scanf("%s", name);
+	printf("\n\tEnter the new filename:  ");
+	scanf("%s",fn);
+	
 	fp1=fopen(name,"r");
-	fp2=fopen(fn,"w");
 
 	if(fp1 == NULL)
 	{
@@ -214,6 +220,10 @@ void Copy()
 		return;
 
 	}
+	
+	fp2=fopen(fn,"w");
+
+	
 
 	while(!feof(fp1))
 	{
@@ -222,6 +232,7 @@ void Copy()
 	}
 
 printf("\n\tFile has been copied successfully");
+fclose(fp1);
 fclose(fp2);
 }
 
@@ -294,10 +305,7 @@ void SaveAs()
 		return;
 	}
 	
-	ch = rename(name, fn);
-
-	remove(name);	
-
+	ch = rename(name, fn);	
 
 	printf("\n\tpress '.' to save\n\n\t");
 
@@ -324,7 +332,7 @@ void Find()
 	if(fp1==NULL)
 	{
 		printf("\n\tFile not found!");
-		fclose(fp1);
+		return;
 	}
 
 
@@ -357,6 +365,5 @@ void Find()
 	}
 
 }
-
 
 
