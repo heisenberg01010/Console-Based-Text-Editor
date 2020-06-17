@@ -167,14 +167,24 @@ void comparison()
 
         if (ch1 != ch2) 
         { 
-            printf("Files not equal\n"); 
-            printf("Line Number : %d \t""Position : %d \n", line, col); 
+            printf("\tFiles not identical\n"); 
+            printf("\tLine Number : %d \t""Position : %d \n", line, col); 
+            return;
         } 
   
         ch1 = getc(fp1); 
         ch2 = getc(fp2); 
     } 
-    printf("\n\tFiles are identical\n");
+
+    if(ch1 == EOF && ch2 == EOF)
+    {	
+    	printf("\n\tFiles are identical\n");
+	}
+	else
+	{
+        printf("\tFiles not identical\n"); 
+	}
+	
 	fclose(fp1); 
     fclose(fp2); 
 }
