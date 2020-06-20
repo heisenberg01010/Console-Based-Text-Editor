@@ -20,27 +20,29 @@ void View();
 void comparison();
 void Edit();
 void Find();
+void erasetext();
+void removetext(char *str, const char *word); 
 
 #define esc 27
+#define buffersize 1000
 
 int main()
 {
 	do 
 	{
-			printf("\n-----------------------------------------TEXT EDITOR--------------------------------------------------");
-			printf("\n\n\tMENU:\n\t\n");
-			printf("\n\t1.NEWFILE\n\t2.VIEW\n\t3.COPY\n\t4.DELETE\n\t5.COMPARISON\n\t6.EDIT\n\t7.SAVEAS\n\t8.FIND\n\t9.EXIT\n");
-			printf("\n\tEnter your choice: ");
-			
-			scanf("%d",&ch);
-			getchar();
-			fflush(stdin);
+		printf("\n-----------------------------------------TEXT EDITOR--------------------------------------------------");
+		printf("\n\n\tMENU:\n\t\n");
+		printf("\n\t1.NEWFILE\n\t2.VIEW\n\t3.COPY\n\t4.DELETE\n\t5.COMPARISON\n\t6.EDIT\n\t7.SAVEAS\n\t8.FIND\n\t9.EXIT\n");
+		printf("\n\tEnter your choice: ");
+	
+		scanf("%d",&ch);
+		fflush(stdin);
 
-			if(ch < 1 || ch > 9)
-			{
-				printf("\tInvalid Input\n");
-				exit(0);
-			}
+		if(ch < 1 || ch > 9)
+		{
+			printf("\tInvalid Input\n");
+			exit(0);
+		}
 		
 
 		switch(ch)
@@ -94,11 +96,7 @@ int main()
 				break;
 			}
 		}
-		
-	
-	}
-	while(1);
-
+	}while(1);
 return 0;
 }
 
@@ -209,7 +207,6 @@ void View()
 	c=fgetc(fp1);
 	while( c != EOF )                           
 	{
-
 		printf("%c",c);
 		c=getc(fp1);
 	}
@@ -231,12 +228,9 @@ void Copy()
 	{
 		printf("\n\tFile not found!");
 		return;
-
 	}
 	
 	fp2=fopen(fn,"w");
-
-	
 
 	while(!feof(fp1))
 	{
@@ -244,9 +238,9 @@ void Copy()
 		putc(c,fp2);
 	}
 
-printf("\n\tFile has been copied successfully");
-fclose(fp1);
-fclose(fp2);
+	printf("\n\tFile has been copied successfully");
+	fclose(fp1);
+	fclose(fp2);
 }
 
 void Delete()
@@ -267,40 +261,69 @@ void Delete()
 		printf("\n\n\tFile has been deleted successfully!");
 	}
 	else
+	{
 		printf("\n\tError!\n"); 
+	}
 }
 
 void Edit()
 {
-	printf("\n\tEnter the file name: ");
-	scanf("%s",fn);
-	fp1=fopen(fn,"r+");
+	printf("\n\tEdit options available:\n");
+	printf("\t1. Append to file\n");
+	printf("\t2. Delete all instances of a word in the file\n");
+	printf("\n\tEnter you choice: ");
 
-	if(fp1==NULL)
+	int option;
+	scanf("%d", &option);
+	getchar();
+	
+	if(option < 1 || option > 2)
 	{
-		printf("\n\tFile not found!");
-		return;
+		printf("\tInvalid Input\n");
+		return;	
 	}
-	while(!feof(fp1))
+
+	switch(option)
 	{
-		c=getc(fp1);
-		printf("%c",c);
-
-	}
-	printf("\n\tPress Esc and then enter key to save.\n\n\t");
-
-	while(1)
+		case 1:
 		{
-			c=getchar();
-			fputc(c,fp1);
+			printf("\n\tEnter the file name: ");
+			scanf("%s",fn);
+			fp1=fopen(fn,"r+");
 
-		if(c == esc )
+			if(fp1==NULL)
 			{
-				fclose(fp1);
-				break;
+				printf("\n\tFile not found!");
+				return;
 			}
+			while(!feof(fp1))
+			{
+				c=getc(fp1);
+				printf("%c",c);
 
+			}
+			printf("\n\tPress Esc and then enter key to save.\n\n\t");
+
+			while(1)
+			{
+				c=getchar();
+				fputc(c,fp1);
+
+				if(c == esc )
+				{
+					fclose(fp1);
+					break;
+				}
+			}
+			return;
 		}
+		
+		case 2:
+		{
+			erasetext();
+    		return;
+		}	
+	}
 }
 
 void SaveAs()
@@ -323,16 +346,14 @@ void SaveAs()
 	printf("\n\tpress '.' to save\n\n\t");
 
 	while(1)
+	{
+		c=getchar();
+		if(c == '.')
 		{
-			c=getchar();
-
-			if(c == '.')
-				{
-					fclose(fp1);
-					break;
-				}
-
+			fclose(fp1);
+			break;
 		}
+	}
 }
 
 void Find()
@@ -379,4 +400,105 @@ void Find()
 
 }
 
+void erasetext()
+{
+    char nam[30]; char word[100]; char buffer[1000];        
+    FILE * f1; FILE * f2;
+    int line = 0,plus = 0;
 
+
+    printf("\tEnter file name: ");                          
+    scanf("%s", nam);
+
+    printf("\tEnter word to remove: ");                    
+    scanf("%s", word);
+
+    printf("\tEnter line number to edit: ");
+    scanf("%d", &line);
+
+    if(line < 1)
+    {
+        printf("\tInvalid line number\n");
+        return;
+    }
+
+    f1 = fopen(nam,"r");                                  
+    f2 = fopen("new.txt", "w");                             
+
+    if(f1 == NULL || f2 == NULL){                         
+
+        printf("\tUnable to open files.\n");
+        return;
+    }
+
+
+    plus = 0;
+
+    while((fgets(buffer,buffersize,f1)!= NULL))
+    {            
+        plus++;
+
+        if(plus == line)
+        {
+            removetext(buffer,word);                    
+            fputs(buffer,f2);
+        }
+
+        else
+        {
+            fputs(buffer,f2);                           
+        }
+
+    }
+
+    fclose(f1);                                    
+    fclose(f2);
+
+    remove(nam);                                  
+    rename("new.txt" ,nam);                       
+
+    printf("\tThe word \033[1;33m%s\033[0m has been removed form line %d.\n", word, line);
+
+    return;
+
+}
+
+void removetext(char *str, const char *word)
+{
+    int x,z,stringlen,trlen;                            
+    int found;
+
+    stringlen = strlen(str);                            
+    trlen = strlen(word);                               
+
+    for(x=0; x<= (stringlen-trlen); x++)
+    {
+
+        found = 1;
+
+        for(z=0;z<trlen;z++)
+        {
+            if(str[x+z] != word[z])
+            {                        
+                found = 0;
+                break;
+            }
+        }
+        
+        if(str[x+z]!= ' ' && str[x+z] != '\t' && str[x+z] != '\n' && str[x+z] != '\0')     
+        {
+            found = 0;
+        }
+
+        if(found == 1)
+        {
+            for(z=x; z<= (stringlen - trlen); z++)
+            {
+                str[z] = str[z + trlen];
+            }
+
+            stringlen = stringlen - trlen;
+            x--;
+        }
+    }
+}
