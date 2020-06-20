@@ -28,15 +28,15 @@ void removetext(char *str, const char *word);
 
 int main()
 {
-	do 
+	while(1)
 	{
+		ch = 0;
 		printf("\n-----------------------------------------TEXT EDITOR--------------------------------------------------");
 		printf("\n\n\tMENU:\n\t\n");
 		printf("\n\t1.NEWFILE\n\t2.VIEW\n\t3.COPY\n\t4.DELETE\n\t5.COMPARISON\n\t6.EDIT\n\t7.SAVEAS\n\t8.FIND\n\t9.EXIT\n");
 		printf("\n\tEnter your choice: ");
-	
+
 		scanf("%d",&ch);
-		fflush(stdin);
 
 		if(ch < 1 || ch > 9)
 		{
@@ -96,7 +96,7 @@ int main()
 				break;
 			}
 		}
-	}while(1);
+	}
 return 0;
 }
 
