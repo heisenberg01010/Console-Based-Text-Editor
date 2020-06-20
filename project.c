@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 
 int ch;
@@ -26,19 +27,21 @@ int main()
 {
 	do 
 	{
-		do
-		{
 			printf("\n-----------------------------------------TEXT EDITOR--------------------------------------------------");
 			printf("\n\n\tMENU:\n\t\n");
 			printf("\n\t1.NEWFILE\n\t2.VIEW\n\t3.COPY\n\t4.DELETE\n\t5.COMPARISON\n\t6.EDIT\n\t7.SAVEAS\n\t8.FIND\n\t9.EXIT\n");
 			printf("\n\tEnter your choice: ");
 			
-			scanf(" %d",&ch);
+			scanf("%d",&ch);
 			getchar();
 			fflush(stdin);
 
-		}
-		while (ch < 1 || ch > 9);
+			if(ch < 1 || ch > 9)
+			{
+				printf("\tInvalid Input\n");
+				exit(0);
+			}
+		
 
 		switch(ch)
 		{
