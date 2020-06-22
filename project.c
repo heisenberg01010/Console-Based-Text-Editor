@@ -379,8 +379,7 @@ void Find()
 	/* taking input of the desired word/pattern. */
 	printf("\tEnter the phrase to search: ");
 	scanf("%s", str);
-	/* storing our file characters in the temp variable.
-	   temp is pointing to a */
+	/* storing our file characters in the temp variable.*/
 	while(fgets(temp, 100000, fp1) != NULL) 
 	{
 		/* finding our word in the file and storing it in a pointer variable. */
