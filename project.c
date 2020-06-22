@@ -356,6 +356,7 @@ void SaveAs()
 	}
 }
 
+/* function defintion to find all occurences of a word/pattern. */
 void Find()
 {
 	printf("\n\tEnter the file name: ");
@@ -375,24 +376,31 @@ void Find()
 	int match_no = 0;
 	char str[100], *ptr[100], string[100];
 	long int pos;
-
+	/* taking input of the desired word/pattern. */
 	printf("\tEnter the phrase to search: ");
 	scanf("%s", str);
-
+	/* storing our file characters in the temp variable.
+	   temp is pointing to a */
 	while(fgets(temp, 100000, fp1) != NULL) 
 	{
+		/* finding our word in the file and storing it in a pointer variable. */
 		*ptr = strstr(temp, str);
 		if((strstr(temp, str)) != NULL) 
-		{
+		{	
+			/* subtracting the location of the sentence pointer(temp) from our word pointer(ptr)
+			   to get the location of our word.*/
 			pos = *ptr - temp;
+			/* using fseek function to place the pointer at the start of our word/pattern. */
 			fseek(fp1, pos, SEEK_CUR);
+			/* highlighting our word with red colour */
 			*string = printf("\033[1;31m"); printf("\t%s", str); printf("\033[0m");
-			
+			/* printing it in a formatted way */
 			printf("%s found on line %d at position %ld in line : %s\n", string, line, pos, temp);
 			match_no++;
 		}
 		line++;	
 	}
+	/* condition of no match found */
 	if(match_no == 0)
 	{
 		printf("\tNo match found");
