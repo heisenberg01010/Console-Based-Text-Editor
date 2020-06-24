@@ -3,12 +3,10 @@
 #include<string.h>
 #include<ctype.h>
 
-
 int ch;                             //declaring global variables and strings
 char fn[20],e,c,name[20];
 
 fpos_t position;
-
 FILE *fp1,*fp2,*fp;                 //declaring file pointers variable
 
 void Modify();                      //declaration of all the functions to be used in the program
@@ -27,9 +25,7 @@ void removetext(char *str, const char *word);
 #define buffersize 1000
 
 int main()
-{
-
-                                   //layout of display page of text editor
+{	                            //layout of display page of text editor
 	while(1)
 	{
 		ch = 0;
@@ -38,17 +34,13 @@ int main()
 		printf("\n\t 1.NEWFILE\n\t 2.VIEW\n\t 3.COPY\n\t 4.DELETE\n\t 5.COMPARISON\n\t 6.EDIT\n\t 7.SAVEAS\n\t 8.FIND\n\t 9.EXIT\n");
 		printf("\n\tEnter your choice: ");
 
-
-
 		scanf("%d",&ch);                        //user input of function choice
-
 
 		if(ch < 1 || ch > 9)                   //check for valid user input
 		{
 			printf("\tInvalid Input\n");
 			exit(0);
 		}
-
 
 		switch(ch)                            //switch block to select function as per user input
 		{
@@ -105,15 +97,12 @@ int main()
 return 0;
 }
 
-
 //definition of all the functions used in the program
-
 
 //function definition to create new file
 
 void NewFile()                                                                //function takes no argument and returns void
 {
-
 	printf("\n\tEnter the name of the file to be created: ");                 //prompt for user input
 	scanf("%s", name);
 	fp1=fopen(name,"w");                                                      //opening new file with user input name
@@ -124,7 +113,6 @@ void NewFile()                                                                //
 	char temp;
 	scanf("%c", &temp);
 
-
 	while(1)
 	{
 		c=getchar();
@@ -134,7 +122,6 @@ void NewFile()                                                                //
 			fclose(fp1);
 			break;
 		}
-
 		else if(c == '\t')
 		{
 			remove(name);
@@ -142,21 +129,14 @@ void NewFile()                                                                //
 		}
 
 		fputc(c,fp1);
-
 	}
 }
-
-
-
 
 //function definition to compare two files
 
 void comparison()                                                   //function takes no argument and returns void
 {
-
-
 	int line = 1, col = 0;
-
 
 	printf("\n\tEnter the first file: ");                            //user prompt for first file
 		scanf("%s", name);
@@ -166,31 +146,24 @@ void comparison()                                                   //function t
 		scanf("%s", fn);
 		fp2 = fopen(fn,"r");                                        //opening second file entered by user in read only mode
 
-
-
-    if (fp1 == NULL || fp2 == NULL)                                 //check for existence of file and if it has read privileges
-    {
-       printf("\tError : Files not open\n");
-       return;
-    }
-
+    	if (fp1 == NULL || fp2 == NULL)                                 //check for existence of file and if it has read privileges
+    	{
+       		printf("\tError : Files not open\n");
+       		return;
+    	}
 
 	char ch1 = getc(fp1);                                        //reading the two files character wise
-    char ch2 = getc(fp2);
-
-
+   	char ch2 = getc(fp2);
 
 	while (ch1 != EOF && ch2 != EOF)                            //reading files till end of file is reached
-    {
-        col++;                                                  //column or character count
+    	{
+        	col++;                                                  //column or character count
 
-        if (ch1 == '\n' && ch2 == '\n')                         //check for end of line
-        {
-            line++;                                             //increment line count on reaching ending of line
-            col = 0;                                            //column or character set to zero again
-        }
-
-
+        	if (ch1 == '\n' && ch2 == '\n')                         //check for end of line
+		{
+		    line++;                                             //increment line count on reaching ending of line
+		    col = 0;                                            //column or character set to zero again
+		}
 
         if (ch1 != ch2)                                        //for block if characters at same position are not same on the two files
         {
@@ -199,54 +172,39 @@ void comparison()                                                   //function t
             return;                                           //exiting program with proper message display
         }
 
-
         ch1 = getc(fp1);
         ch2 = getc(fp2);
-    }
+    	}
 
-
-    if(ch1 == EOF && ch2 == EOF)                            //end of file is reached for both files
-    {
-    	printf("\n\tFiles are identical\n");
+    	if(ch1 == EOF && ch2 == EOF)                            //end of file is reached for both files
+    	{
+    		printf("\n\tFiles are identical\n");
 	}
-
 	else
 	{
-        printf("\tFiles not identical\n");
+        	printf("\tFiles not identical\n");
 	}
 
 	fclose(fp1);                                           //closing both files
-    fclose(fp2);
+    	fclose(fp2);
 }
-
-
 
 //function to view existing file
 
 void View()                                                  //function takes no argument and returns void
 {
-
 	printf("\n\tEnter the file name: ");                     //user input for file name to be opened
 	scanf("%s",fn);
 	fp1=fopen(fn,"r");                                       //opening file in read only mode
 
-
-
-
 	if(fp1==NULL)                                            //file pointer returns null if file doesn't exist or does not have read privileges
 	{
-
 		printf("\n\tFile not found!");
 		return;
-
 	}
 
-
 	printf("\t");
-
-
 	c=fgetc(fp1);                                            //reading file character wise
-
 
 	while( c != EOF )                                       //characters of file are printed till end of file is reached
 	{
@@ -254,18 +212,14 @@ void View()                                                  //function takes no
 		c=getc(fp1);
 	}
 
-
 	fclose(fp1);                                           //closing file
 	return;
 }
-
-
 
 //function definition to copy contents of existing file to new file
 
 void Copy()                                                           //function takes no argument and returns void
 {
-
 	printf("\n\tEnter the filename from which to copy: ");
 	scanf("%s", name);                                      //user input for name of existing file
 
@@ -280,7 +234,6 @@ void Copy()                                                           //function
 		return;
 	}
 
-
 	fp2=fopen(fn,"w");                                     //opening existing file in write only mode
 
 	while(!feof(fp1))                                      //loop to write characters in new file from existing file till end of file is reached for existing file
@@ -289,14 +242,11 @@ void Copy()                                                           //function
 		putc(c,fp2);
 	}
 
-
 	printf("\n\tFile has been copied successfully");
 
 	fclose(fp1);                                        //closing both the files
 	fclose(fp2);
 }
-
-
 
 //function definition to delete existing file
 
@@ -305,7 +255,6 @@ void Delete()                                           //function takes no argu
 	printf("\n\tEnter the file name: ");
 	scanf("%s",fn);                                    //user inputs file name
 	fp1=fopen(fn,"r");                                 //open the file in read only mode
-
 
 	if(fp1==NULL)                                      //file pointer returns null if file does not exist
 	{
@@ -317,21 +266,13 @@ void Delete()                                           //function takes no argu
 
 	if(remove(fn)==0)                                 //remove function returns zero value if file deleted successfully
 	{
-
 		printf("\n\n\tFile has been deleted successfully!");
-
 	}
-
 	else                                           //remove function returns non zero value if file not deleted successfully
-
 	{
-
 		printf("\n\tError!\n");
-
 	}
 }
-
-
 
 //function definition to edit file
 
@@ -343,20 +284,17 @@ void Edit()                                               //function takes no ar
 	printf("\t2. Delete a word in the file\n");
 	printf("\n\tEnter you choice: ");
 
-
 	int option;
 
 	scanf("%d", &option);                                 // taking input for option
 
 	getchar();
 
-
 	if(option < 1 || option > 2)                            //check for valid input
 	{
 		printf("\tInvalid Input\n");
 		return;
 	}
-
 
 	switch(option)
 	{
@@ -367,7 +305,6 @@ void Edit()                                               //function takes no ar
 
 			fp1=fopen(fn,"r+");                            //opening file in read only mode
 
-
 			if(fp1==NULL)                                  //file pointer returns null if unable to open file
 
 			{
@@ -375,15 +312,12 @@ void Edit()                                               //function takes no ar
 				return;
 			}
 
-
 			while(!feof(fp1))                               //while loop block gets character from file and prints on screen till end of file is reached
 			{
 				c=getc(fp1);
 				printf("%c",c);
-
 			}
 			printf("\n\tPress Esc and then enter key to save.\n\n\t");
-
 
 			while(1)                                        //while loop block to get character input from user and add to file
 			{
@@ -401,15 +335,12 @@ void Edit()                                               //function takes no ar
 
 
 		case 2:                                             //switch case 2 to delete word from file
-
 		{
 			erasetext();                                    //function called for specific word removal
-    		return;
+    			return;
 		}
 	}
 }
-
-
 
 //function definition to rename file
 
@@ -423,18 +354,15 @@ void SaveAs()                                                    //function take
 
 	fp1 = fopen(name, "r");                                     //opening file in read only mode
 
-
 	if(fp1==NULL)                                               //file pointer returns null if unable to open file
 	{
 		printf("\n\tFile not found!");
 		return;
 	}
 
-
 	ch = rename(name, fn);                                     //rename function in c library to change the name of file
 
 	printf("\n\tpress '.' to save\n\n\t");
-
 
 	while(1)                                                  //while loop block to save and close the file
 	{
@@ -447,29 +375,20 @@ void SaveAs()                                                    //function take
 	}
 }
 
-
-
-
-
 //function definition to search a word in file
 
 void Find()                                                 //function takes no argument and returns void
 {
-
 	printf("\n\tEnter the file name: ");
 
 	scanf("%s",fn);                                        //user input for file name
 	fp1=fopen(fn,"r");                                     //opening file in read only mode
 
-
 	if(fp1==NULL)                                          //file pointer returns null if unable to open file
 	{
-
 		printf("\n\tFile not found!");
 		return;
-
 	}
-
 
 	char temp[100000];                                     //variable declaration to store string read from file
 	int line = 1;
@@ -482,7 +401,6 @@ void Find()                                                 //function takes no 
 
 	while(fgets(temp, 100000, fp1) != NULL)               //while loop condition using fgets function
 	{
-
 		*ptr = strstr(temp, str);                         //function to find substring temp in string str
 
 		if((strstr(temp, str)) != NULL)                  //strstr function returns a pointer if string is found or else returns null
@@ -501,20 +419,15 @@ void Find()                                                 //function takes no 
 	{
 		printf("\tNo match found");
 	}
-
 }
-
-
 
 //function definition to delete word from file
 
 void erasetext()                                                   //function takes no argument and returns void
-{
-
+{	
     char nam[30]; char word[100]; char buffer[1000];               //declaring strings to read input from user or store strings from file
     FILE * f1; FILE * f2;                                         //declaring file pointers
     int line = 0,plus = 0;                                       // integer variables for user input and loop count
-
 
     printf("\tEnter file name: ");                               //user input for file name
     scanf("%s", nam);
@@ -525,20 +438,18 @@ void erasetext()                                                   //function ta
     printf("\tEnter line number to edit: ");                   //user input for line number
     scanf("%d", &line);
 
-
     if(line < 1)                                              //check for valid line number
     {
         printf("\tInvalid line number\n");
         return;
     }
 
-
     f1 = fopen(nam,"r");                                      //opening file in read only mode
     f2 = fopen("new.txt", "w");                               //opening a text file in write only mode
 
-
-    if(f1 == NULL || f2 == NULL){                             //file pointer returns null if unable to open file or if read write privileges do not exist for file
-
+    if(f1 == NULL || f2 == NULL)                              //file pointer returns null if unable to open file or if read write privileges do not exist for file
+    {
+	
         printf("\tUnable to open files.\n");
         return;
     }
