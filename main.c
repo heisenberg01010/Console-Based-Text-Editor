@@ -312,9 +312,8 @@ void Edit()                                               //function takes no ar
 				return;
 			}
 
-			while(!feof(fp1))                               //while loop block gets character from file and prints on screen till end of file is reached
+			while((c=getc(fp1))!= EOF)                   //while loop block gets character from file and prints on screen till end of file is reached
 			{
-				c=getc(fp1);
 				printf("%c",c);
 			}
 			printf("\n\tPress Esc and then enter key to save.\n\n\t");
@@ -322,13 +321,15 @@ void Edit()                                               //function takes no ar
 			while(1)                                        //while loop block to get character input from user and add to file
 			{
 				c=getchar();
-				fputc(c,fp1);
 
 				if(c == esc )                               //escape sequence to close file
 				{
 					fclose(fp1);
 					break;
 				}
+
+				fputc(c,fp1);
+
 			}
 			return;
 		}
