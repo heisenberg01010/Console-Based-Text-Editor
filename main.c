@@ -139,27 +139,27 @@ void comparison()                                                   //function t
 	int line = 1, col = 0;
 
 	printf("\n\tEnter the first file: ");                            //user prompt for first file
-		scanf("%s", name);
-		fp1 = fopen(name,"r");                                       //opening first file entered by user in read only mode
+	scanf("%s", name);
+	fp1 = fopen(name,"r");                                       //opening first file entered by user in read only mode
 
 	printf("\n\tEnter the second file: ");                          //user prompt for second file
-		scanf("%s", fn);
-		fp2 = fopen(fn,"r");                                        //opening second file entered by user in read only mode
+	scanf("%s", fn);
+	fp2 = fopen(fn,"r");                                        //opening second file entered by user in read only mode
 
-    	if (fp1 == NULL || fp2 == NULL)                                 //check for existence of file and if it has read privileges
-    	{
-       		printf("\tError : Files not open\n");
-       		return;
-    	}
+    if (fp1 == NULL || fp2 == NULL)                                 //check for existence of file and if it has read privileges
+    {
+    	printf("\tError : Files not open\n");
+       	return;
+    }
 
 	char ch1 = getc(fp1);                                        //reading the two files character wise
    	char ch2 = getc(fp2);
 
 	while (ch1 != EOF && ch2 != EOF)                            //reading files till end of file is reached
-    	{
-        	col++;                                                  //column or character count
+    {
+       	col++;                                                  //column or character count
 
-        	if (ch1 == '\n' && ch2 == '\n')                         //check for end of line
+       	if (ch1 == '\n' && ch2 == '\n')                         //check for end of line
 		{
 		    line++;                                             //increment line count on reaching ending of line
 		    col = 0;                                            //column or character set to zero again
@@ -174,19 +174,19 @@ void comparison()                                                   //function t
 
         ch1 = getc(fp1);
         ch2 = getc(fp2);
-    	}
+    }
 
-    	if(ch1 == EOF && ch2 == EOF)                            //end of file is reached for both files
-    	{
-    		printf("\n\tFiles are identical\n");
+    if(ch1 == EOF && ch2 == EOF)                            //end of file is reached for both files
+    {
+    	printf("\n\tFiles are identical\n");
 	}
 	else
 	{
-        	printf("\tFiles not identical\n");
+       	printf("\tFiles not identical\n");
 	}
 
 	fclose(fp1);                                           //closing both files
-    	fclose(fp2);
+    fclose(fp2);
 }
 
 //function to view existing file
@@ -333,7 +333,6 @@ void Edit()                                               //function takes no ar
 			return;
 		}
 
-
 		case 2:                                             //switch case 2 to delete word from file
 		{
 			erasetext();                                    //function called for specific word removal
@@ -449,34 +448,27 @@ void erasetext()                                                   //function ta
 
     if(f1 == NULL || f2 == NULL)                              //file pointer returns null if unable to open file or if read write privileges do not exist for file
     {
-	
-        printf("\tUnable to open files.\n");
+	    printf("\tUnable to open files.\n");
         return;
     }
 
-
     plus = 0;                                               //plus is initialized to zero
-
-
 
     while((fgets(buffer,buffersize,f1)!= NULL))            //while condition using fgets function
     {
         plus++;                                            //incrementing plus as line number
 
-
         if(plus == line)                                   /*when plus equals specified line number removetext function is
-        {                                                    called to remove word from the line*/
+                                                            called to remove word from the line*/
+        {
             removetext(buffer,word);
             fputs(buffer,f2);
         }
-
         else                                               //copies text from existing file to new file
         {
             fputs(buffer,f2);
         }
-
     }
-
 
     fclose(f1);                                          //closing both files after editing
     fclose(f2);
@@ -484,33 +476,26 @@ void erasetext()                                                   //function ta
     remove(nam);                                         //deleting previous file
     rename("new.txt" ,nam);                              //renaming edited file to previous file name
 
-
     printf("\tThe word \033[1;33m%s\033[0m has been removed form line %d.\n", word, line);
 
     return;
-
 }
-
-
 
 //function definition to remove word from specified line in file
 
 void removetext(char *str, const char *word)                          //function takes two strings as argument and returns void
 {
-
     int x,z,stringlen,trlen;                                          //local variables declaration
     int found;
 
     stringlen = strlen(str);                                          //length of sentence
     trlen = strlen(word);                                             //length of word
 
-
-
-
     for(x=0; x<= (stringlen-trlen); x++)                            /* for block matches each character of sentence to each character of
                                                                         word
-    {                                                                  if words do not match found is set
+                                                                      if words do not match found is set
                                                                        to zero and loop breaks out of the present iteration */
+    {
         found = 1;
 
         for(z=0;z<trlen;z++)
@@ -526,11 +511,9 @@ void removetext(char *str, const char *word)                          //function
         {
             found = 0;
         }
-
-
-
-                                                                                        /*if word is found then sentence string is
-        if(found == 1)                                                                     decremented and shifted to the left*/
+                                                          /*if word is found then sentence string is
+                                                            decremented and shifted to the left*/
+        if(found == 1)
         {
             for(z=x; z<= (stringlen - trlen); z++)
             {
