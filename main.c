@@ -108,7 +108,7 @@ void NewFile()                                                                //
 	fp1=fopen(name,"w");                                                      //opening new file with user input name
 
 	printf("\n\tPress Esc and then Enter to save.\n\t");
-	printf("Press Tab key and then Enter to quit without saving.\n\n\t");
+	printf("Press Tab key and then Enter to quit without saving.\n\n");
 
 	char temp;
 	scanf("%c", &temp);
