@@ -207,7 +207,6 @@ void View()                                                  //function takes no
 		return;
 	}
 
-	printf("\t");
 	c=fgetc(fp1);                                            //reading file character wise
 
 	while( c != EOF )                                       //characters of file are printed till end of file is reached
@@ -242,7 +241,7 @@ void Copy()                                                           //function
 
 	fp2=fopen(fn,"w");                                     //opening existing file in write only mode
 
-	while((c=getc(fp1)) != EOF)                                      //loop to write characters in new file from existing file till end of file is reached for existing file
+	while((c=getc(fp1)) != EOF)                            //loop to write characters in new file from existing file till end of file is reached for existing file
 	{
 		putc(c,fp2);
 	}
@@ -307,9 +306,8 @@ void Edit()                                               //function takes no ar
 		case 1:                                            //switch case 1 to append file
 		{
 			printf("\n\tEnter the file name: ");
-			getchar();
 			scanf("%[^\n]",fn);                                //taking input of file name
-
+	
 			fp1=fopen(fn,"r+");                            //opening file in read and write mode
 
 			if(fp1==NULL)                                  //file pointer returns null if unable to open file
@@ -317,7 +315,7 @@ void Edit()                                               //function takes no ar
 			{
 				printf("\n\tFile not found!");
 				return;
-			}
+			}	
 
 			while((c=getc(fp1))!= EOF)                   //while loop block gets character from file and prints on screen till end of file is reached
 			{
@@ -355,11 +353,11 @@ void SaveAs()                                                    //function take
 {
 	printf("\n\tEnter the name of the file to be changed: ");
 	getchar();
-	scanf("%[^\n]", name);                                          //user input for name of existing file
+	scanf("%[^\n]", name);                                        //user input for name of existing file
 
 	printf("\n\tEnter the new file name: ");
 	getchar();
-	scanf("%[^\n]", fn);                                            //user input for new name of file
+	scanf("%[^\n]", fn);                                          //user input for new name of file
 
 	fp1 = fopen(name, "r");                                     //opening file in read only mode
 
@@ -369,19 +367,17 @@ void SaveAs()                                                    //function take
 		return;
 	}
 
-	ch = rename(name, fn);                                     //rename function in c library to change the name of file
+	fp2=fopen(fn,"w");                                     //opening a new file in write only mode
 
-	printf("\n\tpress '.' to save\n\n\t");
-
-	while(1)                                                  //while loop block to save and close the file
+	while((c=getc(fp1)) != EOF)                            //loop to write characters in new file from existing file till end of file is reached for existing file
 	{
-		c=getchar();
-		if(c == '.')
-		{
-			fclose(fp1);
-			break;
-		}
+		putc(c,fp2);
 	}
+
+	printf("\n\tFile has been copied successfully");
+
+	fclose(fp1);                                        //closing both the files
+	fclose(fp2);
 }
 
 //function definition to search a word in file
@@ -440,7 +436,6 @@ void erasetext()                                                   //function ta
     int line = 0,plus = 0;                                       // integer variables for user input and loop count
 
     printf("\tEnter file name: ");                               //user input for file name
-    getchar();
     scanf("%[^\n]", nam);
 
     printf("\tEnter word to remove: ");                         //user input of word to remove
