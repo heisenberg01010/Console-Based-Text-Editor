@@ -103,8 +103,9 @@ return 0;
 
 void NewFile()                                                                //function takes no argument and returns void
 {
-	printf("\n\tEnter the name of the file to be created: ");                 //prompt for user input
-	scanf("%s", name);
+	printf("\n\tEnter the name of the file to be created: ");  
+	getchar();
+	scanf("%[^\n]", name);	               									  //prompt for user input
 	fp1=fopen(name,"w");                                                      //opening new file with user input name
 
 	printf("\n\tPress Esc and then Enter to save.\n\t");
@@ -117,7 +118,7 @@ void NewFile()                                                                //
 	{
 		c=getchar();
 
-		if(c == esc )
+		if(c == esc)
 		{
 			fclose(fp1);
 			break;
@@ -139,11 +140,13 @@ void comparison()                                                   //function t
 	int line = 1, col = 0;
 
 	printf("\n\tEnter the first file: ");                            //user prompt for first file
-	scanf("%s", name);
+	getchar();
+	scanf("%[^\n]", name);
 	fp1 = fopen(name,"r");                                       //opening first file entered by user in read only mode
 
 	printf("\n\tEnter the second file: ");                          //user prompt for second file
-	scanf("%s", fn);
+	getchar();
+	scanf("%[^\n]", fn);
 	fp2 = fopen(fn,"r");                                        //opening second file entered by user in read only mode
 
     if (fp1 == NULL || fp2 == NULL)                                 //check for existence of file and if it has read privileges
@@ -194,7 +197,8 @@ void comparison()                                                   //function t
 void View()                                                  //function takes no argument and returns void
 {
 	printf("\n\tEnter the file name: ");                     //user input for file name to be opened
-	scanf("%s",fn);
+	getchar();
+	scanf("%[^\n]",fn);
 	fp1=fopen(fn,"r");                                       //opening file in read only mode
 
 	if(fp1==NULL)                                            //file pointer returns null if file doesn't exist or does not have read privileges
@@ -221,10 +225,12 @@ void View()                                                  //function takes no
 void Copy()                                                           //function takes no argument and returns void
 {
 	printf("\n\tEnter the filename from which to copy: ");
-	scanf("%s", name);                                      //user input for name of existing file
+	getchar();
+	scanf("%[^\n]", name);                                      //user input for name of existing file
 
 	printf("\n\tEnter the new filename:  ");
-	scanf("%s",fn);                                         //user input for name of new file
+	getchar();
+	scanf("%[^\n]",fn);                                         //user input for name of new file
 
 	fp1=fopen(name,"r");                                    //opening existing file in read only mode
 
@@ -236,9 +242,8 @@ void Copy()                                                           //function
 
 	fp2=fopen(fn,"w");                                     //opening existing file in write only mode
 
-	while(!feof(fp1))                                      //loop to write characters in new file from existing file till end of file is reached for existing file
+	while((c=getc(fp1)) != EOF)                                      //loop to write characters in new file from existing file till end of file is reached for existing file
 	{
-		c=getc(fp1);
 		putc(c,fp2);
 	}
 
@@ -253,7 +258,8 @@ void Copy()                                                           //function
 void Delete()                                           //function takes no argument and returns void
 {
 	printf("\n\tEnter the file name: ");
-	scanf("%s",fn);                                    //user inputs file name
+	getchar();
+	scanf("%[^\n]",fn);                                    //user inputs file name
 	fp1=fopen(fn,"r");                                 //open the file in read only mode
 
 	if(fp1==NULL)                                      //file pointer returns null if file does not exist
@@ -301,9 +307,10 @@ void Edit()                                               //function takes no ar
 		case 1:                                            //switch case 1 to append file
 		{
 			printf("\n\tEnter the file name: ");
-			scanf("%s",fn);                                //taking input of file name
+			getchar();
+			scanf("%[^\n]",fn);                                //taking input of file name
 
-			fp1=fopen(fn,"r+");                            //opening file in read only mode
+			fp1=fopen(fn,"r+");                            //opening file in read and write mode
 
 			if(fp1==NULL)                                  //file pointer returns null if unable to open file
 
@@ -316,7 +323,7 @@ void Edit()                                               //function takes no ar
 			{
 				printf("%c",c);
 			}
-			printf("\n\tPress Esc and then enter key to save.\n\n\t");
+			printf("\n\tPress Esc and then enter key to save.\n\n");
 
 			while(1)                                        //while loop block to get character input from user and add to file
 			{
@@ -347,10 +354,12 @@ void Edit()                                               //function takes no ar
 void SaveAs()                                                    //function takes no argument and returns void
 {
 	printf("\n\tEnter the name of the file to be changed: ");
-	scanf("%s", name);                                          //user input for name of existing file
+	getchar();
+	scanf("%[^\n]", name);                                          //user input for name of existing file
 
 	printf("\n\tEnter the new file name: ");
-	scanf("%s", fn);                                            //user input for new name of file
+	getchar();
+	scanf("%[^\n]", fn);                                            //user input for new name of file
 
 	fp1 = fopen(name, "r");                                     //opening file in read only mode
 
@@ -380,8 +389,8 @@ void SaveAs()                                                    //function take
 void Find()                                                 //function takes no argument and returns void
 {
 	printf("\n\tEnter the file name: ");
-
-	scanf("%s",fn);                                        //user input for file name
+	getchar();
+	scanf("%[^\n]",fn);                                        //user input for file name
 	fp1=fopen(fn,"r");                                     //opening file in read only mode
 
 	if(fp1==NULL)                                          //file pointer returns null if unable to open file
@@ -397,7 +406,8 @@ void Find()                                                 //function takes no 
 	long int pos;
 
 	printf("\tEnter the phrase to search: ");             //user input to search word
-	scanf("%s", str);
+	getchar();
+	scanf("%[^\n]", str);
 
 	while(fgets(temp, 100000, fp1) != NULL)               //while loop condition using fgets function
 	{
@@ -430,10 +440,12 @@ void erasetext()                                                   //function ta
     int line = 0,plus = 0;                                       // integer variables for user input and loop count
 
     printf("\tEnter file name: ");                               //user input for file name
-    scanf("%s", nam);
+    getchar();
+    scanf("%[^\n]", nam);
 
     printf("\tEnter word to remove: ");                         //user input of word to remove
-    scanf("%s", word);
+    getchar();
+    scanf("%[^\n]", word);
 
     printf("\tEnter line number to edit: ");                   //user input for line number
     scanf("%d", &line);
