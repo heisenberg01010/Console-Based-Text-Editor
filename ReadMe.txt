@@ -6,7 +6,7 @@ Assignment question attempted: 4
 Team:
 1. 2019B1PS0946P Siddham Jasoria
 2. 2019A5PS1058P Debojita Saha
-3. 2019D2TS1282P Vidhi Bhardwaj
+3. 2019D2TS1282P Jai Lodha
 ######
 Description of the program:
 The attached code is for a text editor program in C language. It is a menu driven application.
